@@ -141,12 +141,37 @@ namespace Talent.Services.Profile.Controllers
             throw new NotImplementedException();
         }
 
+
+
         [HttpPost("addLanguage")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "talent")]
         public ActionResult AddLanguage([FromBody] AddLanguageViewModel language)
         {
             //Your code here;
-            throw new NotImplementedException();
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    language.CurrentUserId = _userAppContext.CurrentUserId;
+                    bool a = _profileService.AddNewLanguage(language);
+                    if (a)
+                    {
+                        return Json(new { success = true });
+                    }
+                    else
+                    {
+                        return Json(new { success = false });
+                    }
+                }
+                catch(Exception e)
+                {
+                    return Json(new { success = false });
+                }
+               
+            }
+            return Json(new { success = false });
+
+            //throw new NotImplementedException();
         }
 
         [HttpPost("updateLanguage")]
@@ -154,7 +179,28 @@ namespace Talent.Services.Profile.Controllers
         public async Task<ActionResult> UpdateLanguage([FromBody] AddLanguageViewModel language)
         {
             //Your code here;
-            throw new NotImplementedException();
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    UserLanguage uL = null;
+                    uL.Id = language.Id;
+                    uL.Language = language.Name;
+                    uL.LanguageLevel = language.Level;
+                    uL.UserId = language.CurrentUserId;
+
+                    await _userLanguageRepository.Update(uL);
+
+                    return Json(new { success = true });
+                }
+                catch (Exception e)
+                {
+                    return Json(new { success = false });
+                }
+
+            }
+            return Json(new { success = false });
+            //throw new NotImplementedException();
         }
 
         [HttpPost("deleteLanguage")]
@@ -162,7 +208,29 @@ namespace Talent.Services.Profile.Controllers
         public async Task<ActionResult> DeleteLanguage([FromBody] AddLanguageViewModel language)
         {
             //Your code here;
-            throw new NotImplementedException();
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    UserLanguage uL = null;
+                    uL.Id = language.Id;
+                    uL.Language = language.Name;
+                    uL.LanguageLevel = language.Level;
+                    uL.UserId = language.CurrentUserId;
+
+                    await _userLanguageRepository.Delete(uL);
+                    return Json(new { success = true });
+                }
+                catch (Exception e)
+                {
+                    return Json(new { success = false });
+                }
+
+            }
+            return Json(new { success = false });
+
+
+            //throw new NotImplementedException();
         }
 
         [HttpGet("getSkill")]
@@ -178,7 +246,27 @@ namespace Talent.Services.Profile.Controllers
         public ActionResult AddSkill([FromBody]AddSkillViewModel skill)
         {
             //Your code here;
-            throw new NotImplementedException();
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    UserSkill uS = null;
+                    uS.Id = ObjectId.GenerateNewId().ToString();
+                    uS.Skill = skill.Name;
+                    uS.ExperienceLevel = skill.Level;
+                    uS.UserId = _userAppContext.CurrentUserId;
+                    _userSkillRepository.Add(uS);
+
+                    return Json(new { success = true });
+                }
+                catch (Exception e)
+                {
+                    return Json(new { success = false });
+                }
+
+            }
+            return Json(new { success = false });
+            //throw new NotImplementedException();
         }
 
         [HttpPost("updateSkill")]
@@ -186,7 +274,27 @@ namespace Talent.Services.Profile.Controllers
         public async Task<IActionResult> UpdateSkill([FromBody]AddSkillViewModel skill)
         {
             //Your code here;
-            throw new NotImplementedException();
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    UserSkill uS = null;
+                    uS.Id = skill.Id;
+                    uS.Skill = skill.Name;
+                    uS.ExperienceLevel = skill.Level;
+                    uS.UserId = _userAppContext.CurrentUserId;
+                    await _userSkillRepository.Update(uS);
+
+                    return Json(new { success = true });
+                }
+                catch (Exception e)
+                {
+                    return Json(new { success = false });
+                }
+
+            }
+            return Json(new { success = false });
+            // throw new NotImplementedException();
         }
 
         [HttpPost("deleteSkill")]
@@ -194,7 +302,27 @@ namespace Talent.Services.Profile.Controllers
         public async Task<IActionResult> DeleteSkill([FromBody]AddSkillViewModel skill)
         {
             //Your code here;
-            throw new NotImplementedException();
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    UserSkill uS = null;
+                    uS.Id = skill.Id;
+                    uS.Skill = skill.Name;
+                    uS.ExperienceLevel = skill.Level;
+                    uS.UserId = _userAppContext.CurrentUserId;
+                    await _userSkillRepository.Delete(uS);
+
+                    return Json(new { success = true });
+                }
+                catch (Exception e)
+                {
+                    return Json(new { success = false });
+                }
+
+            }
+            return Json(new { success = false });
+            //throw new NotImplementedException();
         }
 
         [HttpGet("getCertification")]
@@ -243,7 +371,21 @@ namespace Talent.Services.Profile.Controllers
         public async Task<ActionResult> UpdateProfilePhoto()
         {
             //Your code here;
-            throw new NotImplementedException();
+            IFormFile file = Request.Form.Files[0];
+            string id = _userAppContext.CurrentUserId;
+            if (ModelState.IsValid)
+            {
+                bool b = await _profileService.UpdateTalentPhoto(id, file);
+                if (b)
+                {
+                    return Json(new { success = true });
+                }else
+                {
+                    return Json(new { success = false });
+                }
+            }
+            return Json(new { success = false });
+            //throw new NotImplementedException();
         }
 
         [HttpPost("updateTalentCV")]
@@ -424,12 +566,13 @@ namespace Talent.Services.Profile.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (await _profileService.UpdateTalentProfile(profile, _userAppContext.CurrentUserId))
-                {
-                    return Json(new { Success = true });
-                }
-            }
-            return Json(new { Success = false });
+                 if (await _profileService.UpdateTalentProfile(profile, _userAppContext.CurrentUserId))
+                 {
+                     return Json(new { Success = true });
+                 }
+             }
+             return Json(new { Success = false }); 
+               // throw new NotImplementedException();
         }
 
         [HttpGet("getTalent")]

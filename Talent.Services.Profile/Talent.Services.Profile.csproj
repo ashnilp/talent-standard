@@ -17,6 +17,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="images\" />
+    <Folder Include="NewFolder\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

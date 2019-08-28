@@ -9,7 +9,7 @@ export default class SelectedCompany extends React.Component {
     }
 
     render() {
-       
+       return null
    
     }
 }

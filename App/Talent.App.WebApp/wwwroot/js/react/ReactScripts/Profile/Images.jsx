@@ -83,7 +83,7 @@ export class Images extends React.Component {
                 TalentUtil.notification.show("Exceed Maximum number of files allowable to upload", "error", null, null);
             } else {
                 localSelectedFile = localSelectedFile.concat(event.target.files[i]),
-                localSelectedFileName = localSelectedFileName.concat(event.target.files[i].name),
+                localSelectedFileName = localSelectedFileName.conloccat(event.target.files[i].name),
                 localImageSrc = localImageSrc.concat(window.URL.createObjectURL(event.target.files[i])),
                 localImageId = localImageId.concat('0'),
                 localCurrentNoOfFiles = localCurrentNoOfFiles + 1
@@ -124,40 +124,7 @@ export class Images extends React.Component {
     }
 
     fileUploadHandler(Id) {
-        let data = new FormData();
-        for (var i = 0; i < this.state.selectedFile.length; i++) {
-            if (this.state.selectedFile[i] != "") {
-                data.append('file' + i, this.state.selectedFile[i]);
-            }
-        }
-
-        data.append('Id', Id);
-        data.append('FileRemoveId', this.state.selectedRemoveFileId);
-
-        var cookies = Cookies.get('talentAuthToken');
-
-        $.ajax({
-            url: 'http://localhost:60290/profile/profile/addEmployerProfileImages',
-            headers: {
-                'Authorization': 'Bearer ' + cookies
-            },
-            type: "POST",
-            data: data,
-            cache: false,
-            processData: false,
-            contentType: false,
-            success: function (res) {
-                if (res.success) {
-                    this.loadImages(Id);
-                } else {
-                    TalentUtil.notification.show(res.message, "error", null, null);
-                }
-            }.bind(this),
-            error: function (res, status, error) {
-                //Display error
-                TalentUtil.notification.show("There is an error when updating Images - " + error, "error", null, null);
-            }
-        });
+        
     }
 
     render() {

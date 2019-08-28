@@ -13,7 +13,7 @@ export default class NotesAndComments extends React.Component {
   
     
     render() {
-        
+        return null
  
     }
 }

@@ -7,6 +7,6 @@ export default class EmployerCard extends React.Component {
     }
 
     render() {
- 
+        return null
     }
 }

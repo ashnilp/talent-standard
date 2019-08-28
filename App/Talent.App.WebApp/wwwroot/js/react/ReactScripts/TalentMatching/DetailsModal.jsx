@@ -9,6 +9,6 @@ export class DetailsModal extends React.Component {
     };
 
     render() {
-        
+        return null
     }
 }

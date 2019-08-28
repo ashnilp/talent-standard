@@ -3,6 +3,7 @@ import Cookies from 'js-cookie';
 import { ChildSingleInput } from '../Form/SingleInput.jsx';
 import { Location } from '../Employer/CreateJob/Location.jsx';
 export class IndividualDetailSection extends Component {
+
     constructor(props) {
         super(props)
 
@@ -121,7 +122,7 @@ export class IndividualDetailSection extends Component {
         let email = this.props.details ? this.props.details.email : ""
         let phone = this.props.details ? this.props.details.phone : ""
 
-        return (
+         return (
             <div className='row'>
                 <div className="ui sixteen wide column">
                     <React.Fragment>
@@ -266,5 +267,5 @@ export class CompanyDetailSection extends Component {
                 </div>
             </div>
         )
-    }
+    } 
 }

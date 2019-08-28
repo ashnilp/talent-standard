@@ -8,6 +8,6 @@ export default class JobListingCard extends React.Component {
 
 
     render() {
-      
+        return null
     }
 }

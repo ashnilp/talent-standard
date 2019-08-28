@@ -51,6 +51,24 @@ export default class ManageJob extends React.Component {
         this.init();
     };
 
+
+    handlePaginationChange(e, { activePage }) {
+        this.loadNewData({ activePage: activePage });
+    }
+
+    handleSortChange(e, { value, name }) {
+        this.state.sortBy[name] = value;
+        this.loadNewData({ sortBy: this.state.sortBy });
+    }
+
+    handleFilter(e, { checked, name }) {
+        this.state.filter[name] = checked;
+        this.setState({
+            filter: this.state.filter
+        })
+    }
+
+
     loadData(callback) {
         var link = 'http://localhost:51689/listing/listing/getSortedEmployerJobs';
         var cookies = Cookies.get('talentAuthToken');
@@ -87,21 +105,7 @@ export default class ManageJob extends React.Component {
         })
     }
 
-    handlePaginationChange(e, { activePage }) {
-        this.loadNewData({ activePage: activePage });
-    }
-
-    handleSortChange(e, { value, name }) {
-        this.state.sortBy[name] = value;
-        this.loadNewData({ sortBy: this.state.sortBy });
-    }
-
-    handleFilter(e, { checked, name }) {
-        this.state.filter[name] = checked;
-        this.setState({
-            filter: this.state.filter
-        })
-    }
+    
 
     loadNewData(data) {
         var loader = this.state.loaderData;

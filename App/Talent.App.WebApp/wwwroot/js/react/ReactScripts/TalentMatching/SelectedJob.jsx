@@ -8,7 +8,6 @@ export default class SelectedJob extends React.Component {
 
    
     render() {
-     
-        
+        return null        
     }
 }

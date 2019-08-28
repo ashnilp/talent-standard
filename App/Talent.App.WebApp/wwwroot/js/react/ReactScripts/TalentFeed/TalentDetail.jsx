@@ -19,6 +19,6 @@ export default class TalentDetail extends React.Component {
     //loadData()  url: 'http://localhost:60290/profile/profile/getTalentProfile',
    
     render() {
-        
+        return null
     }
 }

@@ -62,6 +62,11 @@ namespace Talent.Common.Models
             Videos = new List<TalentVideo>();
             LinkedAccounts = new LinkedAccounts();
         }
+
+        public static explicit operator User(Task<User> v)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class Address

@@ -16,7 +16,9 @@ import SelfIntroduction from './SelfIntroduction.jsx';
 import Experience from './Experience.jsx';
 import { BodyWrapper, loaderData } from '../Layout/BodyWrapper.jsx';
 import { LoggedInNavigation } from '../Layout/LoggedInNavigation.jsx';
-import TalentStatus from './TalentStatus.jsx';
+import TalentStatus from './TalentStatus.jsx';  
+//import { Button, Icon, List } from '../../semantic-ui-react.min.js';
+
 
 export default class AccountProfile extends React.Component {
     constructor(props) {
@@ -43,6 +45,10 @@ export default class AccountProfile extends React.Component {
                     availableDate: null
                 }
             },
+            formErrors: { name: '', email: '' },
+            nameValid: false,
+            emailValid: false,
+            formValid: true,
             loaderData: loaderData,
 
         }
@@ -81,38 +87,82 @@ export default class AccountProfile extends React.Component {
         })
         this.init()
     }
+
+    //validate name and email
+    validateField(fieldName, value) {
+        let fieldValidationErrors = this.state.formErrors;
+        let emailValid = this.state.emailValid;
+        let nameValid = this.state.nameValid;
+        var formValid = this.state.formValid;
+
+        switch (fieldName) {
+            case 'email':
+                emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+                fieldValidationErrors.email = emailValid ? '' : ' is invalid';
+                formValid = emailValid != null;
+                break;
+            case 'name':
+                nameValid = value.match('\w');
+                fieldValidationErrors.nameValid = nameValid ? '' : ' is invalid';
+                formValid = nameValid;
+                break;
+            default:
+                break;
+        }
+        this.setState({
+            formErrors: fieldValidationErrors,
+            emailValid: emailValid,
+            nameValid: nameValid,
+            formValid: formValid
+        }, this.validateForm)
+    }
+
+
+
     //updates component's state without saving data
     updateWithoutSave(newValues) {
         let newProfile = Object.assign({}, this.state.profileData, newValues)
         this.setState({
             profileData: newProfile
+            
         })
     }
 
     //updates component's state and saves data
     updateAndSaveData(newValues) {
+        console.log("Update and Save Data")
+        console.log(newValues)
+
         let newProfile = Object.assign({}, this.state.profileData, newValues)
+        console.log(newProfile)
         this.setState({
             profileData: newProfile
-        }, this.saveProfile)
+        }, this.saveProfile) 
     }
+
+    
 
     updateForComponentId(componentId, newValues) {
         this.updateAndSaveData(newValues)
     }
 
     saveProfile() {
+        
+        let data = Object.assign({}, this.state.profileData)
+        
+        
         var cookies = Cookies.get('talentAuthToken');
         $.ajax({
             url: 'http://localhost:60290/profile/profile/updateTalentProfile',
+            
             headers: {
                 'Authorization': 'Bearer ' + cookies,
                 'Content-Type': 'application/json'
             },
             type: "POST",
-            data: JSON.stringify(this.state.profileData),
+            data: JSON.stringify(data),
             success: function (res) {
-                console.log(res)
+                
                 if (res.success == true) {
                     TalentUtil.notification.show("Profile updated sucessfully", "success", null, null)
                 } else {
@@ -124,6 +174,7 @@ export default class AccountProfile extends React.Component {
                 console.log(res)
                 console.log(a)
                 console.log(b)
+                TalentUtil.notification.show("error -- Profile did not update successfully", "error", null, null)
             }
         })
     }
@@ -135,6 +186,8 @@ export default class AccountProfile extends React.Component {
             email: this.state.profileData.email,
             phone: this.state.profileData.phone
         }
+        console.log("Profile")
+        console.log(this.state)
         return (
             <BodyWrapper reload={this.loadData} loaderData={this.state.loaderData}>
                 <section className="page-body">
@@ -187,6 +240,22 @@ export default class AccountProfile extends React.Component {
                                         >
                                             <Language
                                                 languageData={this.state.profileData.languages}
+                                                /*languageData={[
+                                                    {
+                                                        id: "1",
+                                                        name: "Hindi",
+                                                        level: "Basic",
+                                                        currentUserId: "1"
+
+                                                    },
+                                                    {
+                                                        id: "2",
+                                                        name: "Engilish",
+                                                        level: "Conversational",
+                                                        currentUserId: "1"
+
+                                                    }
+                                                ]} */
                                                 updateProfileData={this.updateAndSaveData}
                                             />
                                         </FormItemWrapper>
@@ -293,7 +362,7 @@ export default class AccountProfile extends React.Component {
                         </div>
                     </div>
                 </section>
-            </BodyWrapper>
-        )
+            </BodyWrapper> 
+        ) 
     }
 }
