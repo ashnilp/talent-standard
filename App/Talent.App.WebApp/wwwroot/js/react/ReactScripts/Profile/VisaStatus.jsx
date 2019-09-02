@@ -21,22 +21,19 @@ export default class VisaStatus extends React.Component {
 
         this.saveVisa = this.saveVisa.bind(this)
         this.handleChange = this.handleChange.bind(this)
-        this.renderEdit = this.renderEdit.bind(this)
-        this.renderDisplay = this.renderDisplay.bind(this)
-    
         this.handleOnChange = this.handleOnChange.bind(this)
+        this.saveVisa = this.saveVisa.bind(this)
     }
 
 
     handleChange(event) {
-        console.log("Inside Handle change")
-        console.log(event.target.value)
+        
         let v = event.target.value
         this.setState({
             profileData: {
                 visaExpiryDate: v
             }
-        }, () => console.log(this.state.profileData))
+        })
     }
 
     handleOnChange(event) {
@@ -49,81 +46,126 @@ export default class VisaStatus extends React.Component {
                 visaStatus: visaStat
             }
 
-        }, () =>  this.x(visaStat)) 
+        }, () => this.saveVisa()) 
     }
 
-    x(visaStat) {
-        console.log("Hello    " + visaStat)
-        if (visaStat == "Citizen" || visaStat == "Permanent Resident") {
-            console.log("inside check")
-            this.saveVisa()
-        }
-    }
 
     saveVisa() {
-        console.log("save activated")
-        console.log(this.state.profileData)
-        this.props.updateProfileData(this.state.profileData);
-        this.props.saveProfileData(this.state.profileData)
+       
+            this.props.updateProfileData(this.state.profileData);
+            this.props.saveProfileData(this.state.profileData)
+        
+       
     }
 
     
 
     render() {
 
-        console.log("Inside Visa REnder")
-        console.log(this.props)
+        let visaStat = this.props.visaStatus
+        let display = ""
+        let visaStatus = ["Citizen", "Permanent Resident", "Work Visa", "Student Visa"];
+        var visa = visaStatus.map(x => <option key={x} value={x}> {x}</option>);
 
-        let status = false;
-        if (this.state.profileData.visaStatus === null, this.state.profileData.visaStatus === "", this.state.profileData.visaStatus === undefined) {
-            status = true
-        } else if (this.state.profileData.visaStatus === "Work Visa" || this.state.profileData.visaStatus === "Student Visa") {
-            status = false
-        } else {
-            status = true
+        if (visaStat == null || visaStat == undefined || visaStat == "") {
+            display =
+                <div className='row'>
+                    <div className="ui sixteen wide column">
+                        <React.Fragment>
+                            <div>
+                                <label>Visa type</label>
+                                <div className="four wide field">
+                                    <select
+                                        className="ui fluid dropdown"
+                                    lable="visaType"
+                                    value={this.props.visaStatus}
+                                        name="visaStatus"
+                                        onChange={this.handleOnChange}
+                                        placeholder="Visa Status"
+                                    >
+                                        <option value="Select Visa">Select Visa</option>
+                                        {visa}
+                                    </select>
+                                </div>
+                            </div>
+                        </React.Fragment>
+                    </div>
+                </div>
+        } else if (visaStat == "Citizen" || visaStat == "Permanent Resident") {
+            display = 
+                <div className='row'>
+                    <div className="ui sixteen wide column">
+                        <React.Fragment>
+                            <div>
+                                <label>Visa type</label>
+                                <div className="sixteen wide field">
+                                    <select
+                                        className="ui fluid dropdown"
+                                        lable="visaType"
+                                        value={this.props.visaStatus}
+                                        name="visaStatus"
+                                        onChange={this.handleOnChange}
+                                        placeholder="Visa Status"
+                                    >
+                                        <option value="Select Visa">Select Visa</option>
+                                        {visa}
+                                    </select>
+                                </div>
+                            </div>
+                        </React.Fragment>
+                    </div>
+                </div>
+        } else if (visaStat == "Work Visa" || visaStat == "Student Visa") {
+            display =
+                <div className="ui form">
+                    <div className="three fields">
+
+                        <div className="field">
+                            <label>Visa type</label>
+                            <select
+                                className="ui fluid dropdown"
+                                lable="Visa Type"
+                                value={this.props.visaStatus}
+                                name="visaStatus"
+                                onChange={this.handleOnChange}
+                                placeholder="Visa Status"
+                            >
+                                <option value="Select Visa">Select Visa</option>
+                                {visa}
+                            </select>
+                        </div>
+                        <div className="field">
+                            <label>Visa expiry date</label>
+                            <SingleInput
+                                inputType="date"
+                                errorMessage="Date entered incorrect"
+                                name="visaExpiryDate"
+                                content={this.props.visaExpiryDate}
+                                controlFunc={this.handleChange}
+                                placeholder="Enter a phone number"
+                                isError={this.state.isError}
+                            />
+                        </div>
+                        <div className="field">
+                            <button type="button" className="ui teal button" onClick={this.saveVisa}>Save</button>
+                        </div>
+                    </div>
+                </div>
         }
+    
+          
         
 
         return (
-            status ? this.renderDisplay() : this.renderEdit()    
-        )
-    }
-
-    renderDisplay() {
-
-        let visaStatus = ["Citizen", "Permanent Resident", "Work Visa", "Student Visa"];
-
-        var visa = visaStatus.map(x => <option key={x} value={x}> {x}</option>);
-
-        let visaStat = this.props.visaStatus
-
-        return (
-          <div className='row'>
-                <div className="ui sixteen wide column">
-                    <React.Fragment>
-                        <div>
-                            <label>Visa type</label>
-                            <div className="four wide field">
-                                <select
-                                    className="ui fluid dropdown"
-                                    lable="visaType"
-                                    value={visaStat}
-                                    name="visaStatus"
-                                    onChange={this.handleOnChange}
-                                    placeholder="Visa Status"
-                                >
-                                    <option value="Select Visa">Select Visa</option>
-                                    {visa}
-                                </select>
-                            </div>
-                        </div>
-                    </React.Fragment>
-                </div>
+            <div>
+                {display}
             </div>
+          
         )
     }
 
-    renderEdit() {
+   
+    /* renderEdit() {
 
         let visaStatus = ["Citizen", "Permanent Resident", "Work Visa", "Student Visa"];
 
@@ -211,5 +253,5 @@ export default class VisaStatus extends React.Component {
             </div>
                     
         ) */
-    }
+    //} 
 }

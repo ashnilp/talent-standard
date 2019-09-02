@@ -134,12 +134,14 @@ export class Address extends React.Component {
 
    
     render() {
+
+        let popCities = "";
         return (
-            this.state.showEditSection ? this.renderEdit() : this.renderDisplay()    
+            this.state.showEditSection ? this.renderEdit(popCities) : this.renderDisplay()    
         )
     }
 
-    renderEdit() {
+    renderEdit(popCities) {
 
         console.log("Location")
         console.log(this.props)
@@ -186,21 +188,22 @@ export class Address extends React.Component {
         let selectedCity = this.props.addressData.city;
         let citiesOptions = [];
         let countriesOptions = [];
+        var popCities = ""
 
         if (country != null && country != "" && country != undefined) {
 
-            var popCities = ""
-            
             if (this.state.countries != null && this.state.countries != undefined && this.state.countries != "") {
                 countriesOptions = Object.keys(this.state.countries).map((x) => <option key={x} value={x}>{x}</option>);
 
                 if (selectedCountry != undefined && selectedCountry != null && selectedCountry != "") {
                     popCities = this.state.countries[selectedCountry].map(x => <option key={x} value={x}> {x}</option>);
-                } else {
+                } else if (this.state.countries[country] != null) {
                     popCities = this.state.countries[country].map(x => <option key={x} value={x}> {x}</option>);
-                }            
+                } else {
+                    popCities = ""
+                }
             }
-            
+            console.log(popCities)
             citiesOptions = <span><select
                 className="ui dropdown"
                 placeholder="City"
@@ -210,6 +213,8 @@ export class Address extends React.Component {
                 <option value="0"> Select a town or city</option>
                 {popCities}
             </select><br /></span>
+        } else {
+            popCities=""
         }
         
 
