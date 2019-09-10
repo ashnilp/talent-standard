@@ -44,7 +44,7 @@ export class Address extends React.Component {
         this.saveAddress = this.saveAddress.bind(this)
         this.renderEdit = this.renderEdit.bind(this)
         this.renderDisplay = this.renderDisplay.bind(this)
-        //this.handleChangeDropdown = this.handleChangeDropdown.bind(this)
+        this.handleChangeDropdown = this.handleChangeDropdown.bind(this)
         this.handleOnChange = this.handleOnChange.bind(this)
     }
 
@@ -129,7 +129,7 @@ export class Address extends React.Component {
                 address: data
             },
             selectedCountry: data.country
-        }, () => this.getRegion(this.state.selectedCountry))
+        })
     }
 
    
@@ -143,67 +143,20 @@ export class Address extends React.Component {
 
     renderEdit(popCities) {
 
-        console.log("Location")
-        console.log(this.props)
-        /*<select
-                    value={this.state.addressDetails.address.country}
-                    name="country"
-                    lable="Country"
-                    placeholder="Select a country"
-                    onChange={this.handleChangeDropdown}
-                >
 
-                    {
-                        Object.keys(this.state.countries).map((key) => {
-                            return (
-                                <option value={key}>
-                                    {key}
-                                </option>
-                            )
-                        })
-                    }
-                </select>
-
-                <select
-                    name="city"
-                    lable="City"
-                    placeholder="Select your city"
-                    onChange={() => this.handleChange}
-                    value={this.state.addressDetails.address.city}
-                >
-                    {
-                        this.state.region.map((x) => {
-                            return (
-                                <option key={x}>
-                                    {x}
-                                </option>
-                            )
-                        })
-                    }
-                </select>
-         * 
-         * */
-        let selectedCountry = this.state.selectedCountry; //this.props.addressData.country;
-        let country = this.props.addressData.country
-        let selectedCity = this.props.addressData.city;
-        let citiesOptions = [];
+        
         let countriesOptions = [];
-        var popCities = ""
+        let citiesOptions = [];
+        const selectedCountry = this.state.addressDetails.address.country;
+        const selectedCity = this.props.addressData.city;
+        
 
-        if (country != null && country != "" && country != undefined) {
+        countriesOptions = Object.keys(Countries).map((x) => <option key={x} value={x}>{x}</option>);
 
-            if (this.state.countries != null && this.state.countries != undefined && this.state.countries != "") {
-                countriesOptions = Object.keys(this.state.countries).map((x) => <option key={x} value={x}>{x}</option>);
+        if (selectedCountry != "" && selectedCountry != null) {
+            var popCities = ""
+            popCities = Countries[selectedCountry].map(x => <option key={x} value={x}> {x}</option>);
 
-                if (selectedCountry != undefined && selectedCountry != null && selectedCountry != "") {
-                    popCities = this.state.countries[selectedCountry].map(x => <option key={x} value={x}> {x}</option>);
-                } else if (this.state.countries[country] != null) {
-                    popCities = this.state.countries[country].map(x => <option key={x} value={x}> {x}</option>);
-                } else {
-                    popCities = ""
-                }
-            }
-            console.log(popCities)
             citiesOptions = <span><select
                 className="ui dropdown"
                 placeholder="City"
@@ -213,10 +166,7 @@ export class Address extends React.Component {
                 <option value="0"> Select a town or city</option>
                 {popCities}
             </select><br /></span>
-        } else {
-            popCities=""
         }
-        
 
         return (
             <div className='ui sixteen wide column'>
@@ -359,17 +309,27 @@ export class Nationality extends React.Component {
         console.log(this.props)
 
         return (
+
+            <div className='row'>
+                <React.Fragment>
+                    <div>
+                        <div className="sixteen wide field">
+                            <select
+                                value={this.props.nationalityData}
+                                name="nationality"
+                                lable="Nationality"
+                                placeholder="Select your nationality"
+                                onChange={this.handleChange}
+                            >
+                                <option value="">Select your nationality</option>
+                                {nationality}
+                            </select>   
+                        </div>
+                    </div>
+                </React.Fragment>
+            </div>
             
-            <select
-                value={this.props.nationalityData}
-                name="nationality"
-                lable="Nationality"
-                placeholder="Select your nationality"
-                onChange={this.handleChange}
-            >
-                <option value="">Select your nationality</option>
-                {nationality}
-            </select>    
+             
         )
         
     }

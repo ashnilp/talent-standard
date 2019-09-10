@@ -64,6 +64,10 @@ export default class SocialMediaLinkedAccount extends React.Component {
         const data = Object.assign({}, this.state.profileData)
         this.props.updateProfileData(data)
         this.props.saveProfileData(data)
+
+        this.setState({
+            showEditSection: false
+        })
     }
 
     render() {

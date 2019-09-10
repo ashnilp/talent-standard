@@ -109,8 +109,8 @@ namespace Talent.Services.Profile.Domain.Services
                     VisaExpiryDate = profile.VisaExpiryDate,
                     ProfilePhoto = profile.ProfilePhoto,
                     ProfilePhotoUrl = profile.ProfilePhotoUrl,
-                    LinkedAccounts = profile.LinkedAccounts
-
+                    LinkedAccounts = profile.LinkedAccounts,
+                    JobSeekingStatus = profile.JobSeekingStatus
                 };
 
                 return result;
@@ -190,101 +190,103 @@ namespace Talent.Services.Profile.Domain.Services
                     }
                     exitingUser.Experience = newExperience;
 
-                     exitingUser.VisaStatus = model.VisaStatus;
-                     exitingUser.VisaExpiryDate = model.VisaExpiryDate;
-                     /*
-                     exitingUser.ProfilePhoto = model.ProfilePhoto;
-                     exitingUser.ProfilePhotoUrl = model.ProfilePhotoUrl;
-                     exitingUser.VideoName = model.VideoName;
-                     exitingUser.CvName = model.CvName;
-                     exitingUser.Summary = model.Summary;
-                     exitingUser.Description = model.Description;
-                     exitingUser.LinkedAccounts = model.LinkedAccounts;
-                     exitingUser.JobSeekingStatus = model.JobSeekingStatus;
+                    exitingUser.VisaStatus = model.VisaStatus;
+                    exitingUser.VisaExpiryDate = model.VisaExpiryDate;
+                    exitingUser.ProfilePhoto = model.ProfilePhoto;
+                    exitingUser.ProfilePhotoUrl = model.ProfilePhotoUrl;
+                    exitingUser.JobSeekingStatus = model.JobSeekingStatus;
+                    /*
 
-                     var newLanguage = new List<UserLanguage>();
-                     foreach(var item in model.Languages)
-                     {
-                         var language = exitingUser.Languages.SingleOrDefault(x => x.Id == item.Id);
-                         if (language == null)
-                         {
-                             language = new UserLanguage
-                             {
-                                 Id = ObjectId.GenerateNewId().ToString(),
-                                 IsDeleted = false
-                             };
-                         }
-                         UpdateLanguageFromView(item, language);
-                         newLanguage.Add(language);        
-                     }
-                     exitingUser.Languages = newLanguage;
+                    exitingUser.VideoName = model.VideoName;
+                    exitingUser.CvName = model.CvName;
+                    exitingUser.Summary = model.Summary;
+                    exitingUser.Description = model.Description;
+                    exitingUser.LinkedAccounts = model.LinkedAccounts;
+                    
 
-                     var newSkills = new List<UserSkill>();
-                     foreach(var item in model.Skills)
-                     {
-                         var skill = exitingUser.Skills.SingleOrDefault(x => x.Id == item.Id);
-                         if (skill == null)
-                         {
-                             skill = new UserSkill
-                             {
-                                 Id = ObjectId.GenerateNewId().ToString(),
-                                 IsDeleted = false
-                             };
-                         }
-                         UpdateSkillFromView(item, skill);
-                         newSkills.Add(skill);
-                     }
-                     exitingUser.Skills = newSkills;
+                    var newLanguage = new List<UserLanguage>();
+                    foreach(var item in model.Languages)
+                    {
+                        var language = exitingUser.Languages.SingleOrDefault(x => x.Id == item.Id);
+                        if (language == null)
+                        {
+                            language = new UserLanguage
+                            {
+                                Id = ObjectId.GenerateNewId().ToString(),
+                                IsDeleted = false
+                            };
+                        }
+                        UpdateLanguageFromView(item, language);
+                        newLanguage.Add(language);        
+                    }
+                    exitingUser.Languages = newLanguage;
 
-                     var newEducation = new List<UserEducation>();
-                     foreach(var item in model.Education)
-                     {
-                         var education = exitingUser.Education.SingleOrDefault(x => x.Id == item.Id);
-                         if (education == null)
-                         {
-                             education = new UserEducation
-                             {
-                                 Id = ObjectId.GenerateNewId().ToString(),
-                                 IsDeleted = false
-                             };
-                         }
-                         UpdateEducationFromView(item, education);
-                         newEducation.Add(education);
-                     }
-                     exitingUser.Education = newEducation;
+                    var newSkills = new List<UserSkill>();
+                    foreach(var item in model.Skills)
+                    {
+                        var skill = exitingUser.Skills.SingleOrDefault(x => x.Id == item.Id);
+                        if (skill == null)
+                        {
+                            skill = new UserSkill
+                            {
+                                Id = ObjectId.GenerateNewId().ToString(),
+                                IsDeleted = false
+                            };
+                        }
+                        UpdateSkillFromView(item, skill);
+                        newSkills.Add(skill);
+                    }
+                    exitingUser.Skills = newSkills;
 
-                     var newCertification = new List<UserCertification>();
-                     foreach (var item in model.Certifications)
-                     {
-                         var certification = exitingUser.Certifications.SingleOrDefault(x => x.Id == item.Id);
-                         if (certification == null)
-                         {
-                             certification = new UserCertification
-                             {
-                                 Id = ObjectId.GenerateNewId().ToString(),
-                                 IsDeleted = false
-                             };
-                         }
-                         UpdateCertificationFromView(item, certification);
-                         newCertification.Add(certification);
-                     }
-                     exitingUser.Certifications = newCertification;
+                    var newEducation = new List<UserEducation>();
+                    foreach(var item in model.Education)
+                    {
+                        var education = exitingUser.Education.SingleOrDefault(x => x.Id == item.Id);
+                        if (education == null)
+                        {
+                            education = new UserEducation
+                            {
+                                Id = ObjectId.GenerateNewId().ToString(),
+                                IsDeleted = false
+                            };
+                        }
+                        UpdateEducationFromView(item, education);
+                        newEducation.Add(education);
+                    }
+                    exitingUser.Education = newEducation;
 
-                     var newExperience = new List<UserExperience>();
-                     foreach(var item in model.Experience)
-                     {
-                         var experience = exitingUser.Experience.SingleOrDefault(x => x.Id == item.Id);
-                         if (experience == null)
-                         {
-                             experience = new UserExperience
-                             {
-                                 Id = ObjectId.GenerateNewId().ToString()
-                             };
-                         }
-                         UpdateExperienceFromView(item, experience);
-                         newExperience.Add(experience);
-                     }
-                     exitingUser.Experience = newExperience; */
+                    var newCertification = new List<UserCertification>();
+                    foreach (var item in model.Certifications)
+                    {
+                        var certification = exitingUser.Certifications.SingleOrDefault(x => x.Id == item.Id);
+                        if (certification == null)
+                        {
+                            certification = new UserCertification
+                            {
+                                Id = ObjectId.GenerateNewId().ToString(),
+                                IsDeleted = false
+                            };
+                        }
+                        UpdateCertificationFromView(item, certification);
+                        newCertification.Add(certification);
+                    }
+                    exitingUser.Certifications = newCertification;
+
+                    var newExperience = new List<UserExperience>();
+                    foreach(var item in model.Experience)
+                    {
+                        var experience = exitingUser.Experience.SingleOrDefault(x => x.Id == item.Id);
+                        if (experience == null)
+                        {
+                            experience = new UserExperience
+                            {
+                                Id = ObjectId.GenerateNewId().ToString()
+                            };
+                        }
+                        UpdateExperienceFromView(item, experience);
+                        newExperience.Add(experience);
+                    }
+                    exitingUser.Experience = newExperience; */
 
                     await _userRepository.Update(exitingUser);
 
@@ -454,7 +456,7 @@ namespace Talent.Services.Profile.Domain.Services
                 return true;
             }
 
-            return false;
+            return true;
 
         }
 
@@ -487,26 +489,30 @@ namespace Talent.Services.Profile.Domain.Services
             {
                 return false;
             }
-
-            var newFileName = await _fileService.SaveFile(file, FileType.ProfilePhoto);
-
-            if (!string.IsNullOrWhiteSpace(newFileName))
+            else
             {
-                var oldFileName = profile.ProfilePhoto;
+                var newFileName = await _fileService.SaveFile(file, FileType.ProfilePhoto);
 
-                if (!string.IsNullOrWhiteSpace(oldFileName))
+                if (!string.IsNullOrWhiteSpace(newFileName))
                 {
-                    await _fileService.DeleteFile(oldFileName, FileType.ProfilePhoto);
+                    var oldFileName = profile.ProfilePhoto;
+
+                    if (!string.IsNullOrWhiteSpace(oldFileName))
+                    {
+                        await _fileService.DeleteFile(oldFileName, FileType.ProfilePhoto);
+                    }
+
+                    profile.ProfilePhoto = newFileName;
+                    profile.ProfilePhotoUrl = await _fileService.GetFileURL(newFileName, FileType.ProfilePhoto);
+
+                    await _userRepository.Update(profile);
+                    return true;
                 }
 
-                profile.ProfilePhoto = newFileName;
-                profile.ProfilePhotoUrl = await _fileService.GetFileURL(newFileName, FileType.ProfilePhoto);
-
-                await _userRepository.Update(profile);
-                return true;
             }
+            
 
-            return false;
+            return false; 
 
            // throw new NotImplementedException();
         }

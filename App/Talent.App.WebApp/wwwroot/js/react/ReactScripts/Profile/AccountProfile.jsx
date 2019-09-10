@@ -36,6 +36,7 @@ export default class AccountProfile extends React.Component {
                 visaStatus: '',
                 visaExpiryDate: '',
                 profilePhoto: '',
+                profilePhotoUrl: '',
                 linkedAccounts: {
                     linkedIn: "",
                     github: ""
@@ -324,6 +325,7 @@ export default class AccountProfile extends React.Component {
                                             <PhotoUpload
                                                 imageId={this.state.profileData.profilePhotoUrl}
                                                 updateProfileData={this.updateWithoutSave}
+                                                updateProfileDataSave={this.updateAndSaveData}
                                                 savePhotoUrl='http://localhost:60290/profile/profile/updateProfilePhoto'
                                             />
                                         </FormItemWrapper>

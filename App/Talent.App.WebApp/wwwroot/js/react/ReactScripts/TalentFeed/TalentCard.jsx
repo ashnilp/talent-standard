@@ -12,7 +12,18 @@ export default class TalentCard extends React.Component {
     
     
     render() {
-       return null
+        return (
+            <div className="ui card">
+                <div className="content">
+                    <i className="right floated star icon"></i>
+                    Ru (Talent) Ng
+                </div>
+                <div className="content">
+                    <div className="image">
+                    </div>
+                </div>
+            </div>   
+        )
     }
 }
 

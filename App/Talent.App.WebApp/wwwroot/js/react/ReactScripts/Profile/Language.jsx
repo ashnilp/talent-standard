@@ -441,7 +441,7 @@ export default class Language extends React.Component {
                         <div className="column">
                             <div className="ui list">
                                 <div className="item" key={x.name}>
-                                    <i className="right floated minus icon" onClick={this.deleteLanguage.bind(this, i)}></i>
+                                    <i className="right floated close icon" onClick={this.deleteLanguage.bind(this, i)}></i>
                                     <i key={x.name} className="right floated pencil alternate icon" onClick={this.openEdit.bind(this, x.name)}></i>
                                 </div>
                             </div>

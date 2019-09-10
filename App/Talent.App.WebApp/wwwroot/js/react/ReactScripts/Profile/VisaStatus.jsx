@@ -74,7 +74,6 @@ export default class VisaStatus extends React.Component {
                         <React.Fragment>
                             <div>
                                 <label>Visa type</label>
-                                <div className="four wide field">
                                     <select
                                         className="ui fluid dropdown"
                                     lable="visaType"
@@ -86,7 +85,7 @@ export default class VisaStatus extends React.Component {
                                         <option value="Select Visa">Select Visa</option>
                                         {visa}
                                     </select>
-                                </div>
+                               
                             </div>
                         </React.Fragment>
                     </div>
@@ -94,7 +93,6 @@ export default class VisaStatus extends React.Component {
         } else if (visaStat == "Citizen" || visaStat == "Permanent Resident") {
             display = 
                 <div className='row'>
-                    <div className="ui sixteen wide column">
                         <React.Fragment>
                             <div>
                                 <label>Visa type</label>
@@ -113,7 +111,6 @@ export default class VisaStatus extends React.Component {
                                 </div>
                             </div>
                         </React.Fragment>
-                    </div>
                 </div>
         } else if (visaStat == "Work Visa" || visaStat == "Student Visa") {
             display =

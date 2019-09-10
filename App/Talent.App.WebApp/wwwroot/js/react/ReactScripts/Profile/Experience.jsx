@@ -1,6 +1,8 @@
 ﻿/* Experience section */
 import React from 'react';
 import Cookies from 'js-cookie';
+import Moment from 'react-moment';
+
 
 export default class Experience extends React.Component {
 
@@ -532,18 +534,18 @@ export default class Experience extends React.Component {
                         </div>
                         <div className="column">
                             <div className="ui list">
-                                <div className="item">{x.start}</div>
+                                <div className="item"><Moment format="DD MMM, YYYY">{x.start}</Moment></div>
                             </div>
                         </div>
                         <div className="column">
                             <div className="ui list">
-                                <div className="item">{x.end}</div>
+                                <div className="item"><Moment format="DD MMM, YYYY">{x.end}</Moment></div>
                             </div>
                         </div>
                         <div className="column">
                             <div className="ui list">
                                 <div className="item" key={x.name}>
-                                    <i className="right floated minus icon" onClick={this.deleteExperience.bind(this, i)}></i>
+                                    <i className="right floated close icon" onClick={this.deleteExperience.bind(this, i)}></i>
                                     <i key={x.name} className="right floated pencil alternate icon" onClick={this.openEdit.bind(this, x.name)}></i>
                                 </div>
                             </div>
